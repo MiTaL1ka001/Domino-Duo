@@ -1,5 +1,5 @@
 import React from 'react';
-import { RoundResult, SeatIndex, TeamIndex, calculateHandPips } from '@domino-duo/shared';
+import { RoundResult, SeatIndex, TeamIndex, Tile, calculateHandPips } from '@domino-duo/shared';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { PlayerSlot } from '../../types/ui';
@@ -255,7 +255,7 @@ export const RoundResultsModal: React.FC<RoundResultsModalProps> = ({
                     </div>
                   ) : (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '2px' }}>
-                      {hand.map((tile) => (
+                      {hand.map((tile: Tile) => (
                         <div
                           key={tile.id}
                           style={{

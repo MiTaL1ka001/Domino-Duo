@@ -104,7 +104,7 @@ export const DominoBoard: React.FC<DominoBoardProps> = ({
           )}
 
           {/* Placed Domino Tiles */}
-          {board.tiles.map((tile, index) => {
+          {board.tiles.map((tile: Tile, index: number) => {
             const isTileDouble = isDouble(tile);
             // Doubles are rendered vertically (crosswise to chain); others horizontal
             const orientation = isTileDouble ? 'vertical' : 'horizontal';

@@ -267,14 +267,18 @@ export const LobbyScreen: React.FC<LobbyScreenProps> = ({
 
               {/* Seats for Team A */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {([0, 2] as SeatIndex[]).map((seat) => (
-                  <SeatCard
-                    key={seat}
-                    slot={session.slots[seat]}
-                    isMySeat={seat === session.mySeat}
-                    isMyPartner={seat === partnerSeat}
-                  />
-                ))}
+                {([0, 2] as SeatIndex[]).map((seat) => {
+                  const slot = session.slots[seat];
+                  if (!slot) return null;
+                  return (
+                    <SeatCard
+                      key={seat}
+                      slot={slot}
+                      isMySeat={seat === session.mySeat}
+                      isMyPartner={seat === partnerSeat}
+                    />
+                  );
+                })}
               </div>
             </div>
 
@@ -368,14 +372,18 @@ export const LobbyScreen: React.FC<LobbyScreenProps> = ({
 
               {/* Seats for Team B */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {([1, 3] as SeatIndex[]).map((seat) => (
-                  <SeatCard
-                    key={seat}
-                    slot={session.slots[seat]}
-                    isMySeat={seat === session.mySeat}
-                    isMyPartner={seat === partnerSeat}
-                  />
-                ))}
+                {([1, 3] as SeatIndex[]).map((seat) => {
+                  const slot = session.slots[seat];
+                  if (!slot) return null;
+                  return (
+                    <SeatCard
+                      key={seat}
+                      slot={slot}
+                      isMySeat={seat === session.mySeat}
+                      isMyPartner={seat === partnerSeat}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

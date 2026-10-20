@@ -69,7 +69,7 @@ export const GameTable: React.FC<GameTableProps> = ({
     if (!playerView.isMyTurn) return;
 
     // Check if this tile has legal moves
-    const matchingMoves = playerView.legalMoves.filter((m) => m.tileId === tile.id);
+    const matchingMoves = playerView.legalMoves.filter((m: { tileId: string }) => m.tileId === tile.id);
     if (matchingMoves.length === 0) return;
 
     const availableEnds = getPlayableEnds(tile);

@@ -60,7 +60,7 @@ export const App: React.FC = () => {
         socket.emit(
           'room:join',
           { roomCode: saved.roomCode, nickname: saved.nickname, sessionToken: saved.sessionToken },
-          (res) => {
+          (res: any) => {
             if (res.success && res.roomCode && res.sessionToken && res.seat !== undefined) {
               setRoomCode(res.roomCode);
               setSessionToken(res.sessionToken);
@@ -144,7 +144,7 @@ export const App: React.FC = () => {
   const handleCreateOnlineRoom = (nickname: string, preferredTeam?: TeamIndex) => {
     setMode('online');
     const socket = getSocket();
-    socket.emit('room:create', { nickname, preferredTeam }, (res) => {
+    socket.emit('room:create', { nickname, preferredTeam }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Failed to create room');
       }
@@ -154,7 +154,7 @@ export const App: React.FC = () => {
   const handleJoinOnlineRoom = (nickname: string, code: string, preferredTeam?: TeamIndex) => {
     setMode('online');
     const socket = getSocket();
-    socket.emit('room:join', { roomCode: code, nickname, preferredTeam }, (res) => {
+    socket.emit('room:join', { roomCode: code, nickname, preferredTeam }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Failed to join room');
       }
@@ -163,7 +163,7 @@ export const App: React.FC = () => {
 
   const handleOnlineSelectTeam = (targetTeam: TeamIndex) => {
     const socket = getSocket();
-    socket.emit('room:selectTeam', { roomCode, sessionToken, targetTeam }, (res) => {
+    socket.emit('room:selectTeam', { roomCode, sessionToken, targetTeam }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Cannot switch team');
       } else if (res.newSeat !== undefined) {
@@ -175,7 +175,7 @@ export const App: React.FC = () => {
 
   const handleOnlineToggleReady = () => {
     const socket = getSocket();
-    socket.emit('room:toggleReady', { roomCode, sessionToken }, (res) => {
+    socket.emit('room:toggleReady', { roomCode, sessionToken }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Failed to toggle ready');
       }
@@ -184,7 +184,7 @@ export const App: React.FC = () => {
 
   const handleOnlineStartMatch = () => {
     const socket = getSocket();
-    socket.emit('room:startMatch', { roomCode, sessionToken }, (res) => {
+    socket.emit('room:startMatch', { roomCode, sessionToken }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Cannot start match');
       }
@@ -193,7 +193,7 @@ export const App: React.FC = () => {
 
   const handleOnlinePlayMove = (tileId: string, end: 'left' | 'right') => {
     const socket = getSocket();
-    socket.emit('game:playTile', { roomCode, sessionToken, tileId, end }, (res) => {
+    socket.emit('game:playTile', { roomCode, sessionToken, tileId, end }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Invalid move');
       }
@@ -202,7 +202,7 @@ export const App: React.FC = () => {
 
   const handleOnlinePassTurn = () => {
     const socket = getSocket();
-    socket.emit('game:pass', { roomCode, sessionToken }, (res) => {
+    socket.emit('game:pass', { roomCode, sessionToken }, (res: any) => {
       if (!res.success) {
         showToast(res.error || 'Invalid pass');
       }
@@ -399,7 +399,7 @@ export const App: React.FC = () => {
           const botHand = round.hands[activeSeat];
           const legalMoves = getLegalMovesForHand(round.board, botHand);
           if (legalMoves.length > 0 && legalMoves[0]) {
-            const sixSix = legalMoves.find((m) => m.tileId === '6-6');
+            const sixSix = legalMoves.find((m: { tileId: string }) => m.tileId === '6-6');
             const move = sixSix || legalMoves[0];
             const updated = enginePlayMove(demoMatchState, activeSeat, move.tileId, move.end);
             setDemoMatchState(updated);
