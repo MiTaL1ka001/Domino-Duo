@@ -10,8 +10,9 @@ export type TypedSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 let socketInstance: TypedSocket | null = null;
 
 export function getServerUrl(): string {
-  if (import.meta.env.VITE_SERVER_URL) {
-    return import.meta.env.VITE_SERVER_URL;
+  const envUrl = import.meta.env.VITE_SERVER_URL;
+  if (envUrl && typeof envUrl === 'string') {
+    return envUrl.trim().replace(/\/+$/, '');
   }
   if (typeof window !== 'undefined') {
     // If running in development (e.g. Vite on port 5173, 5174, etc.)
@@ -27,15 +28,17 @@ export function getServerUrl(): string {
 export function getSocket(): TypedSocket {
   if (!socketInstance) {
     const serverUrl = getServerUrl();
+    const isSecure = serverUrl.startsWith('https://') || (typeof window !== 'undefined' && window.location.protocol === 'https:');
 
     socketInstance = io(serverUrl, {
       transports: ['websocket', 'polling'],
+      secure: isSecure,
       autoConnect: true,
       reconnection: true,
       reconnectionAttempts: Infinity,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
-      timeout: 10000
+      timeout: 20000
     });
   }
   return socketInstance;

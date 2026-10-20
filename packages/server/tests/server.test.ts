@@ -8,7 +8,7 @@ import {
   PlayerPublicView,
   ERROR_CODES
 } from '@domino-duo/shared';
-import { app, httpServer, io } from '../src/index';
+import { app, httpServer, io, isOriginAllowed } from '../src/index';
 import { roomStore } from '../src/rooms/store';
 
 type TypedClientSocket = ClientSocket<ServerToClientEvents, ClientToServerEvents>;
@@ -525,5 +525,18 @@ describe('Real-Time Multiplayer Server & 4-Player Integration', () => {
     expect(room.matchState.scores).toEqual([13, 0]);
 
     clients.forEach((c) => c.disconnect());
+  });
+
+  it('should correctly allow local and production CORS origins without breaking development', () => {
+    // 1. Requests with no origin (e.g. server-to-server health checks) are allowed
+    expect(isOriginAllowed(undefined)).toBe(true);
+
+    // 2. Local development origins (localhost and 127.0.0.1 on any port) are always allowed
+    expect(isOriginAllowed('http://localhost:5173')).toBe(true);
+    expect(isOriginAllowed('http://localhost:3000')).toBe(true);
+    expect(isOriginAllowed('http://127.0.0.1:5173')).toBe(true);
+
+    // 3. Wildcard or configured origins are allowed
+    expect(isOriginAllowed('https://domino-duo.vercel.app')).toBe(true);
   });
 });
