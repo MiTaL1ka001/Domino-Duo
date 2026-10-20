@@ -1,0 +1,24 @@
+{
+  "name": "domino-duo-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Domino Duo - Private Online 2v2 Domino Game",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev --workspace=@domino-duo/server",
+    "dev:client": "npm run dev --workspace=@domino-duo/client",
+    "build": "tsc -b && npm run build --workspace=@domino-duo/client",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "concurrently": "^9.0.1",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
+  }
+}

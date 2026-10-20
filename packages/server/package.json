@@ -1,0 +1,29 @@
+{
+  "name": "@domino-duo/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Domino Duo - Authoritative Real-Time Game Server",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@domino-duo/shared": "*",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "socket.io": "^4.8.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "socket.io-client": "^4.8.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,130 @@
+:root {
+  --color-table-bg: #092415;
+  --color-felt-deep: #0e351f;
+  --color-felt-mid: #15462b;
+  --color-felt-light: #1b5635;
+  --color-felt-highlight: #236c43;
+  --color-border-wood: #3a2213;
+  --color-border-accent: #2e784f;
+  
+  --color-tile-bg: #fdfdfc;
+  --color-tile-border: #d4d4cb;
+  --color-tile-divider: #b8b8ae;
+  --color-tile-pip: #18181b;
+  --color-tile-rivet: #d97706;
+  --color-tile-shadow: rgba(0, 0, 0, 0.45);
+  --color-tile-playable-glow: rgba(52, 211, 153, 0.7);
+
+  --color-team-0: #38bdf8; /* Team Sky Blue */
+  --color-team-0-bg: rgba(56, 189, 248, 0.15);
+  --color-team-1: #f59e0b; /* Team Amber Gold */
+  --color-team-1-bg: rgba(245, 158, 11, 0.15);
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--color-table-bg);
+  color: #f3f4f6;
+  user-select: none;
+}
+
+/* Background Table Felt Texture */
+.felt-table {
+  background: radial-gradient(circle at 50% 40%, var(--color-felt-light) 0%, var(--color-felt-mid) 45%, var(--color-felt-deep) 80%, var(--color-table-bg) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.felt-table::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Focus styles for keyboard accessibility */
+button:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 2px;
+}
+
+/* Subtle animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--color-tile-playable-glow), 0 4px 6px -1px var(--color-tile-shadow);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 0 18px var(--color-tile-playable-glow), 0 8px 12px -2px var(--color-tile-shadow);
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes turnRingPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px #34d399, 0 0 12px rgba(52, 211, 153, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 3px #10b981, 0 0 20px rgba(16, 185, 129, 0.8);
+  }
+}
+
+.playable-tile-anim {
+  animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+.turn-active-ring {
+  animation: turnRingPulse 2s infinite ease-in-out;
+}
+
+/* Domino Tile 3D tactile styling */
+.domino-tile-face {
+  background: linear-gradient(135deg, #ffffff 0%, #f4f4ec 100%);
+  border: 1.5px solid var(--color-tile-border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  border-radius: 7px;
+  position: relative;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease;
+}
+
+.domino-tile-face:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45), 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.domino-tile-face:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
